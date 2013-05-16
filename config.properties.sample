@@ -1,0 +1,22 @@
+# Configuration
+
+date=`date +"%d%m%Y"` # helper: jjmmaaaa
+
+## Capdemat Build
+capdematVersion="4.7-$date"                           # Capdemat version, usually "4-X[-X]-jjmmAAAA. Tips: use $date"
+capdematBuild="CapDémat-";                            # Jenkins build
+
+## Server configuration
+dirData="/home/capdemat/xxx/data"                     # Where admins-data stuff will be unziped 
+dirTomcat="/home/sites/xxx"                           # Location of tomcat (must contains webapps)
+dirDelivery="/home/capdemat/xxx/delivery"             # Where delivery releases are stored
+
+service="/etc/service/xxx"                            # Service to run/stop CapDemat
+
+## Postgres
+pgUser="postgres"                                     # Optional. Define the postgres user if you want to backup databases
+                                                      # Must be an unix user (su $pgUser)
+
+## Jenkins settings
+jenkinsToken=""
+jenkinsUser=""
