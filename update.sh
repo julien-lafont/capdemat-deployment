@@ -49,7 +49,7 @@ ask() {
 : ${jenkinsUser?not defined}
 
 # Folders are valid?
-#if [ ! -d "$service" ]; then echo "Service $service not found"; exit 1; fi;
+if [ ! -d "$service" ]; then echo "Service $service not found"; exit 1; fi;
 if [ ! -d "$dirData" ]; then echo "Data directory $dirData not found"; exit 1; fi;
 if [ ! -d "$dirTomcat" ]; then echo "Tomcat directory $dirTomcat not found"; exit 1; fi;
 
