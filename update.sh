@@ -1,7 +1,7 @@
 #!/bin/bash
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-VERSION="0.2"
+VERSION="0.3"
 
 # Helpers
 red="\033[31m"
@@ -61,7 +61,7 @@ d=`date +"%Y-%m-%d-%Hh%M"`
 #
 echo ""
 echo -e "Capdemat Deployment $VERSION -$red Please double check the configuration! $reset"
-if [[ $* != *--test* ]]; then
+if [[ $* == *--test* ]]; then
   echo -ne "$green"; echo -e "TEST MODE : Nothing will be modified$reset"
 fi
 echo ""
@@ -90,7 +90,7 @@ fi;
 echo ""
 echo -e "If everything is OK: $green<Enter>$reset, otherwise: $red<CTRL+C>$reset"
 
-if [[ $* != *--test* ]]; then
+if [[ $* == *--test* ]]; then
   exit 0
 fi
 
