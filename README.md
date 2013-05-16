@@ -1,7 +1,7 @@
 # Mise à jour automatique CapDémat
 
-> Script de mise à jour automatique pour CapDémat
-> **A VOS RISQUES ET PERILS ;)**
+> Script de mise à jour automatique pour CapDémat<br />
+> **VERSION ALPHA : A UTILISER A VOS RISQUES ET PERILS ;)**
 
 ## Pré-requis
 * Le projet doit être compilé avec Jenkins (configuration habituele)
@@ -19,7 +19,7 @@
 
 ## Utilisation
 
-Compiler le projet sur Jenkins (ou avec (https://github.com/studiodev/jenkins-cli)[jenkins-cli]), puis lancer sur le serveur
+Compiler le projet sur Jenkins (ou avec [jenkins-cli](https://github.com/studiodev/jenkins-cli)), puis lancer sur le serveur
 
     /home/capdemat/xxx/scripts/update.sh
 
