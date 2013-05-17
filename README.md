@@ -3,10 +3,11 @@
 > Script de mise à jour automatique pour CapDémat<br />
 > **VERSION ALPHA : A UTILISER A VOS RISQUES ET PERILS ;)**
 
-## Pré-requis
-* Le projet doit être compilé avec Jenkins (configuration habituele)
-* Le script automatise seulement les tâches habituelles et simples d'une mise à jour: téléchargement des livrables, sauvegarde des fichiers de conf, sauvegarde des BDDs, remplacement des fichiers, start/stop server...
-* Le script n'automatise pas mise à jour des assets, le passage de scripts sql... Mais ces opérations peuvent être exécutées manuellement en parallèle
+## Disclaimer
+* Le projet doit être compilé avec Jenkins (configuration habituelle)
+* Le script automatise seulement les tâches basiques et lourdement répétitives d'une mise à jour: téléchargement des livrables, sauvegarde du fichiers de conf, sauvegarde des BDDs, remplacement des fichiers, start/stop server...
+* Le script n'a pas pour objectif de gérer tous les cas d'utilisation ([principe du 80/20](http://fr.wikipedia.org/wiki/Principe_de_Pareto))
+* De fait, le script n'automatise pas mise à jour des assets, le passage de scripts sql, le remplacement de ficheirs spécifiques... Mais ces opérations peuvent être exécutées manuellement à la fin de la livraison.
 
 ## Installation
 
@@ -23,7 +24,14 @@ Compiler le projet sur Jenkins (ou avec [jenkins-cli](https://github.com/studiod
 
     /home/capdemat/xxx/scripts/update.sh
 
-Pour tester seulement la configuration, lancer le script avec `--test`.
+Le script se déroule en 4 phases :
+ * Mise à jour automatique du script si une version plus récente est disponible sur GIT
+ * Chargement et vérification de la configuration, de l'environnement (à améliorer)
+ * Paramétrage interactif de la livraison (quel build ? quel version ? sauvegarder les BDD ? relancer le serveur à la fin ?)
+ * Lancement de la procédure de mise à jour
+
+Au lancement du script, plusieurs vérifications sont exécutées pour vérifier que la configuration du script est correcte, et que l'environnement CapDémat est compatible.
+Pour lancer uniquement cette vérification, rajouter `--test`
 
 ## License
 
