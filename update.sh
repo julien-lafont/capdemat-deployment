@@ -138,8 +138,12 @@ else
 fi;
 
 echo -ne "- Installing new app: "
+# Extract admin package
+rm -Rf $durData/* || exit 1
 unzip -o -qq -d $dirData CapDemat-admin-$capdematVersion.zip || exit 1
 cp $dirTomcat/webapps/ROOT/WEB-INF/classes/CapDemat-config.properties $dirData/conf/spring || exit 1
+
+# Extract CapDemat webapp
 rm -rf $dirTomcat/webapps/ROOT || exit 1
 unzip -o -qq -d $dirTomcat/webapps/ROOT CapDemat-$capdematVersion.war || exit 1
 cp $dirData/conf/spring/CapDemat-config.properties $dirTomcat/webapps/ROOT/WEB-INF/classes/ || exit 1
