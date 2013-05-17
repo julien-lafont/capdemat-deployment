@@ -12,8 +12,10 @@ cyan="\033[36m"
 
 # Auto-update the script from Git
 if [[ $* != *--skip-update* ]]; then
-  uptodate=$(git --git-dir=$DIR/.git fetch origin -q && git --git-dir=$DIR/.git log HEAD..origin/master --oneline | wc -l | sed 's/^ *//g') # Is the repository up to date? 0=yes
+  # Is the repository up to date? count the new commits available, so O = yes
+  uptodate=$(git --git-dir=$DIR/.git fetch origin -q && git --git-dir=$DIR/.git log HEAD..origin/master --oneline | wc -l | sed 's/^ *//g') 
 
+  # If the script is not uptodate, launch a git pull and restart the script
   if [[ "$uptodate" != "0" ]]; then
     echo "New version released, updating..."
     git --git-dir=$DIR/.git pull -q >/dev/null || echo -e "$red Error when updating this script. Please report to @jla $reset"
@@ -61,7 +63,7 @@ d=`date +"%Y-%m-%d-%Hh%M"`
 #
 echo ""
 echo -e "Capdemat Deployment $VERSION -$red Please double check the configuration! $reset"
-if [[ $* == *--test* ]]; then
+if [[ $* == *--test* ]]; then # Enable test mode with --test
   echo -ne "$green"; echo -e "TEST MODE : Nothing will be modified$reset"
 fi
 echo ""
@@ -107,6 +109,7 @@ mkdir $d || exit 1
 cd $d
 echo "OK"
 
+# Launch download of releases
 echo "-- Downloading last release of CapDemat-$capdematRealVersion.war"
 wget --auth-no-challenge --http-user=$jenkinsUser --http-password=$jenkinsToken \
   "http://build-01.znx.fr/job/$capdematRealBuild/lastSuccessfulBuild/artifact/release/CapDemat-$capdematRealVersion.war" || exit 1
@@ -119,6 +122,7 @@ svc -d $service || exit 1
 sleep 2
 echo "OK"
 
+# Dump all databases starting by capdemat_ to /dump
 echo -ne "- Dump DBs: "
 if [[ "$dumpDB" = "y" || "$dumpDB" = "Y" ]]; then
   dbs=$(su $pgUser -c 'psql -l -t -A' | cut -d "|" -f 1 | grep "capdemat_") # Get all db starting by capdemat_
