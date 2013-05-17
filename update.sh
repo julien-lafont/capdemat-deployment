@@ -139,7 +139,7 @@ fi;
 
 echo -ne "- Installing new app: "
 # Extract admin package
-rm -Rf $durData/* || exit 1
+rm -Rf $dirData/* || exit 1
 unzip -o -qq -d $dirData CapDemat-admin-$capdematVersion.zip || exit 1
 cp $dirTomcat/webapps/ROOT/WEB-INF/classes/CapDemat-config.properties $dirData/conf/spring || exit 1
 
