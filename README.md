@@ -7,7 +7,7 @@
 * Le projet doit être compilé avec Jenkins (configuration habituelle)
 * Le script automatise seulement les tâches basiques et lourdement répétitives d'une mise à jour: téléchargement des livrables, sauvegarde du fichiers de conf, sauvegarde des BDDs, remplacement des fichiers, start/stop server...
 * Le script n'a pas pour objectif de gérer tous les cas d'utilisation ([principe du 80/20](http://fr.wikipedia.org/wiki/Principe_de_Pareto))
-* De fait, le script n'automatise pas mise à jour des assets, le passage de scripts sql, le remplacement de ficheirs spécifiques... Mais ces opérations peuvent être exécutées manuellement à la fin de la livraison.
+* De fait, le script n'automatise pas la mise à jour des assets, le passage de scripts sql, le remplacement de fichiers spécifiques... Mais ces opérations peuvent être exécutés manuellement à la fin de la livraison.
 
 ## Installation
 
