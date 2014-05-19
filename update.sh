@@ -49,6 +49,7 @@ ask() {
 : ${service?not defined}
 : ${jenkinsToken?not defined}
 : ${jenkinsUser?not defined}
+: ${jenkinsUrl?not defined}
 
 # Folders are valid?
 if [ ! -d "$service" ]; then echo "Service $service not found"; exit 1; fi;
@@ -70,6 +71,7 @@ echo ""
 echo -e "  Tomcat               >$cyan $dirTomcat $reset"
 echo -e "  Data                 >$cyan $dirData $reset"
 echo -e "  Service              >$cyan $service $reset"
+echo -e "  Jenkins Server       >$cyan $jenkinsUrl $reset"
 echo -ne "  Build Jenkins        > "; capdematRealBuild=$(ask $capdematBuild);
 echo -ne "  Capdemat version     > "; capdematRealVersion=$(ask $capdematVersion);
 
@@ -110,12 +112,13 @@ cd $d
 echo "OK"
 
 # Launch download of releases
-echo "-- Downloading last release of CapDemat-$capdematRealVersion.war"
+echo "-- Downloading last release of $archivePrefix-$capdematRealVersion.war"
+
 wget --auth-no-challenge --http-user=$jenkinsUser --http-password=$jenkinsToken \
-  "http://build-01.znx.fr/job/$capdematRealBuild/lastSuccessfulBuild/artifact/release/CapDemat-$capdematRealVersion.war" || exit 1
-echo "-- Downloading last release of CapDemat-admin-$capdematRealVersion.zip"
+  "http://$jenkinsUrl/job/$capdematRealBuild/lastSuccessfulBuild/artifact/release/$archivePrefix-$capdematRealVersion.war" || exit 1
+echo "-- Downloading last release of $archivePrefix-admin-$capdematRealVersion.zip"
 wget --auth-no-challenge --http-user=$jenkinsUser --http-password=$jenkinsToken \
-   "http://build-01.znx.fr/job/$capdematRealBuild/lastSuccessfulBuild/artifact/release/CapDemat-admin-$capdematRealVersion.zip" || exit 1
+   "http://$jenkinsUrl/job/$capdematRealBuild/lastSuccessfulBuild/artifact/release/$archivePrefix-admin-$capdematRealVersion.zip" || exit 1
 
 echo -ne "- Stopping server: "
 svc -d $service || exit 1
@@ -144,13 +147,13 @@ fi;
 echo -ne "- Installing new app: "
 # Extract admin package
 rm -Rf $dirData/* || exit 1
-unzip -o -qq -d $dirData CapDemat-admin-$capdematVersion.zip || exit 1
-cp $dirTomcat/webapps/ROOT/WEB-INF/classes/CapDemat-config.properties $dirData/conf/spring || exit 1
+unzip -o -qq -d $dirData $archivePrefix-admin-$capdematVersion.zip || exit 1
+cp $dirTomcat/webapps/ROOT/WEB-INF/classes/$archivePrefix-config.properties $dirData/conf/spring || exit 1
 
 # Extract CapDemat webapp
 rm -rf $dirTomcat/webapps/ROOT || exit 1
-unzip -o -qq -d $dirTomcat/webapps/ROOT CapDemat-$capdematVersion.war || exit 1
-cp $dirData/conf/spring/CapDemat-config.properties $dirTomcat/webapps/ROOT/WEB-INF/classes/ || exit 1
+unzip -o -qq -d $dirTomcat/webapps/ROOT $archivePrefix-$capdematVersion.war || exit 1
+cp $dirData/conf/spring/$archivePrefix-config.properties $dirTomcat/webapps/ROOT/WEB-INF/classes/ || exit 1
 echo "OK"
 
 echo -ne "- Starting new app: "
@@ -163,7 +166,7 @@ fi;
 
 echo ""
 echo -ne "$green"; echo -e "Deploy finished with success! $reset"
-echo "Check logs at: $dirTomcat/logs/CapDemat.log"
+echo "Check logs at: $dirTomcat/logs/$archivePrefix.log"
 echo ""
 
 exit 0

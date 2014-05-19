@@ -5,6 +5,7 @@ date=`date +"%d%m%Y"` # helper: jjmmaaaa
 ## Capdemat Build
 capdematVersion="4.7-$date"                           # Capdemat version, usually "4-X[-X]-jjmmAAAA. Tips: use $date"
 capdematBuild="CapDémat-";                            # Jenkins build
+archivePrefix="CapDemat";                             # Final archive prefix
 
 ## Server configuration
 dirData="/home/capdemat/xxx/data"                     # Where admins-data stuff will be unziped 
@@ -20,3 +21,4 @@ pgUser="postgres"                                     # Optional. Define the pos
 ## Jenkins settings
 jenkinsToken=""
 jenkinsUser=""
+jenkinsUrl="xxxxxxxxxxxx.fr"                          # Jenkins server URL
